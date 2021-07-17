@@ -7,10 +7,17 @@ class LRU:
         self.capacity = capacity
     
     def get_cache(self):
-        pass
-    def get(self, key):
-        pass
-    def put(self, key, value):
-        pass
+        return self.cache
     
-            
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        else:
+            self.cache.move_to_end(key)
+            return self.cache[key]
+
+    def put(self, key, value):
+        self.cache[key] = value
+        self.cache.move_to_end(key)
+        if len(self.cache) > self.capacity:
+            self.cache.popitem(last = False)
